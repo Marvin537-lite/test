@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Captain Capy — Возможности</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  html, body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0a0a0f;
+    color: #f5f5f7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  @page {
+    size: 1600px 900px;
+    margin: 0;
+  }
+
+  .slide {
+    width: 1600px;
+    height: 900px;
+    page-break-after: always;
+    page-break-inside: avoid;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 80px;
+    background: radial-gradient(ellipse at top left, #1a1530 0%, #0a0a0f 50%, #0a0a0f 100%);
+  }
+
+  .slide:last-child {
+    page-break-after: auto;
+  }
+
+  /* Decorative orbs */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .orb-1 {
+    width: 600px; height: 600px;
+    background: #f97316;
+    top: -200px; right: -150px;
+  }
+  .orb-2 {
+    width: 500px; height: 500px;
+    background: #8b5cf6;
+    bottom: -200px; left: -100px;
+    opacity: 0.25;
+  }
+
+  /* Grid pattern overlay */
+  .grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .slide-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+  }
+
+  .brand-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f97316, #f59e0b);
+    box-shadow: 0 0 20px rgba(249, 115, 22, 0.6);
+  }
+
+  .slide-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 500;
+  }
+
+  .slide-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: #f97316;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-size: 88px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    margin-bottom: 32px;
+  }
+
+  h2 {
+    font-size: 64px;
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 48px;
+    color: #ffffff;
+  }
+  h2 .accent {
+    color: #f97316;
+  }
+
+  h3 {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+
+  .lede {
+    font-size: 28px;
+    line-height: 1.4;
+    color: rgba(255,255,255,0.7);
+    font-weight: 400;
+    max-width: 1100px;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .card {
+    background: #161622;
+    border: 1px solid #2a2a3a;
+    border-radius: 20px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-accent {
+    border-color: rgba(249, 115, 22, 0.45);
+    background: linear-gradient(135deg, #261a14 0%, #1a1410 100%);
+  }
+
+  .card-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+    display: inline-block;
+  }
+
+  .card p {
+    font-size: 17px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.65);
+  }
+
+  .card .code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: #f97316;
+    background: rgba(249,115,22,0.08);
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-top: 12px;
+  }
+
+  .slide-footer {
+    position: absolute;
+    bottom: 32px;
+    left: 80px;
+    right: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    z-index: 2;
+  }
+
+  /* SLIDE 1: TITLE */
+  .title-slide {
+    background: radial-gradient(ellipse at center, #1f1430 0%, #0a0a0f 70%);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .title-slide .orb-1 {
+    width: 800px; height: 800px;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.3;
+  }
+  .title-slide .slide-body {
+    align-items: center;
+    text-align: center;
+  }
+  .title-mark {
+    width: 96px; height: 96px;
+    border-radius: 28px;
+    background: linear-gradient(135deg, #f97316 0%, #f59e0b 100%);
+    box-shadow: 0 20px 80px rgba(249, 115, 22, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 52px;
+    margin-bottom: 48px;
+  }
+  .title-slide h1 {
+    font-size: 144px;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    color: #ffffff;
+    margin-bottom: 24px;
+  }
+  .title-slide h1 .ac {
+    color: #f97316;
+  }
+  .title-slide .subtitle {
+    font-size: 32px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    max-width: 900px;
+  }
+  .title-slide .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 64px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* Architecture diagram */
+  .arch {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 40px;
+    margin-top: 40px;
+  }
+  .arch-node {
+    background: #161622;
+    border: 2px solid #2a2a3a;
+    border-radius: 24px;
+    padding: 40px;
+    text-align: center;
+  }
+  .arch-node.captain {
+    border-color: rgba(249,115,22,0.6);
+    background: linear-gradient(135deg, #2a1d14 0%, #1a1410 100%);
+  }
+  .arch-node h3 {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+  .arch-node p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.4;
+  }
+  .arch-arrow {
+    font-size: 48px;
+    color: rgba(249,115,22,0.6);
+  }
+  .arch-vms {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .vm-badge {
+    background: #1d1832;
+    border: 1px solid #3d2e6e;
+    border-radius: 12px;
+    padding: 18px 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    color: rgba(255,255,255,0.85);
+    text-align: left;
+  }
+
+  /* Model table */
+  .model-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 16px;
+    font-size: 17px;
+  }
+  .model-table th {
+    text-align: left;
+    padding: 16px 20px;
+    background: rgba(249,115,22,0.1);
+    color: #f97316;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid rgba(249,115,22,0.2);
+  }
+  .model-table th:first-child { border-radius: 12px 0 0 0; }
+  .model-table th:last-child { border-radius: 0 12px 0 0; }
+  .model-table td {
+    padding: 18px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.85);
+  }
+  .model-table td:last-child {
+    font-family: 'JetBrains Mono', monospace;
+    color: #f97316;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .model-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 8px;
+  }
+  .feature-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    font-size: 20px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.85);
+  }
+  .feature-list li::before {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #f97316;
+    margin-top: 12px;
+    flex-shrink: 0;
+    box-shadow: 0 0 12px rgba(249,115,22,0.6);
+  }
+  .feature-list li strong {
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  .stack-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .pill {
+    background: #1a1a26;
+    border: 1px solid #2a2a3a;
+    border-radius: 999px;
+    padding: 10px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    color: rgba(255,255,255,0.85);
+  }
+  .pill-orange {
+    background: #2a1d14;
+    border-color: rgba(249,115,22,0.45);
+    color: #fbbf24;
+  }
+
+  /* Final slide */
+  .final-slide {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: radial-gradient(ellipse at center, #2a1f4a 0%, #0a0a0f 70%);
+  }
+  .final-slide .slide-body {
+    align-items: center;
+    text-align: center;
+  }
+  .final-slide h1 {
+    font-size: 120px;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    margin-bottom: 32px;
+    color: #ffffff;
+  }
+  .final-slide h1 .ac {
+    color: #f97316;
+  }
+  .final-slide .lede {
+    font-size: 28px;
+    max-width: 900px;
+    text-align: center;
+  }
+  .cta {
+    margin-top: 64px;
+    display: inline-block;
+    padding: 24px 48px;
+    background: linear-gradient(135deg, #f97316, #f59e0b);
+    border-radius: 999px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #0a0a0f;
+    box-shadow: 0 20px 60px rgba(249,115,22,0.4);
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .big-stat {
+    font-size: 96px;
+    font-weight: 900;
+    line-height: 1;
+    color: #f97316;
+    letter-spacing: -0.04em;
+    font-family: 'JetBrains Mono', monospace;
+  }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: TITLE -->
+<section class="slide title-slide">
+  <div class="orb orb-1"></div>
+  <div class="grid-bg"></div>
+  <div class="slide-body">
+    <div class="title-mark">🦫</div>
+    <h1>Captain <span class="ac">Capy</span></h1>
+    <div class="subtitle">Автономный кодинг-агент.<br>Расследую, пишу код, шиплю — end-to-end.</div>
+    <div class="meta">11 СЛАЙДОВ · ВОЗМОЖНОСТИ · 2026</div>
+  </div>
+</section>
+
+<!-- SLIDE 2: АРХИТЕКТУРА -->
+<section class="slide">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="grid-bg"></div>
+  <div class="slide-header">
+    <div class="brand"><span class="brand-dot"></span>Captain Capy</div>
+    <div class="slide-num">02 / 11</div>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow">Архитектура</div>
+    <h2>Captain оркестрирует.<br>Build исполняет.</h2>
+    <div class="arch">
+      <div class="arch-node captain">
+        <h3>Captain</h3>
+        <p>Держит контекст треда, исследует код, принимает решения, ревьюлит результаты</p>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-vms">
+        <div class="vm-badge">▸ Build agent · VM-1</div>
+        <div class="vm-badge">▸ Build agent · VM-2</div>
+        <div class="vm-badge">▸ Build agent · VM-N</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span>capy.ai</span>
+    <span>// АРХИТЕКТУРА</span>
+  </div>
+</section>
+
+<!-- SLIDE 3: КОД -->
+<section class="slide">
+  <div class="orb orb-1"></div>
+  <div class="grid-bg"></div>
+  <div class="slide-header">
+    <div class="brand"><span class="brand-dot"></span>Captain Capy</div>
+    <div class="slide-num">03 / 11</div>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow">Работа с кодом</div>
+    <h2>Читаю, пишу,<br>рефакторю.</h2>
+    <div class="two-col">
+      <div>
+        <ul class="feature-list">
+          <li><strong>Любой стек:</strong> Python, TypeScript, Go, Rust, Java, C++, и др.</li>
+          <li><strong>Точечные правки:</strong> атомарные patches с контекстом</li>
+          <li><strong>Массовые рефакторы:</strong> multi-edit и автоматический поиск</li>
+          <li><strong>Стиль кодовой базы:</strong> читаю соседний код и следую конвенциям</li>
+        </ul>
+      </div>
+      <div>
+        <div class="stack-pills">
+          <span class="pill pill-orange">edit</span>
+          <span class="pill pill-orange">multi_edit</span>
+          <span class="pill pill-orange">write</span>
+          <span class="pill">grep</span>
+          <span class="pill">glob</span>
+          <span class="pill">turboread</span>
+          <span class="pill">read</span>
+          <span class="pill">ls</span>
+          <span class="pill">apply_patch</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span>capy.ai</span>
+    <span>// КОД</span>
+  </div>
+</section>
+
+<!-- SLIDE 4: ИССЛЕДОВАНИЕ -->
+<section class="slide">
+  <div class="orb orb-1"></div>
+  <div class="grid-bg"></div>
+  <div class="slide-header">
+    <div class="brand"><span class="brand-dot"></span>Captain Capy</div>
+    <div class="slide-num">04 / 11</div>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow">Исследование кодовой базы</div>
+    <h2>Найду что угодно.<br>Быстро.</h2>
+    <div class="grid-3">
+      <div class="card card-accent">
+        <div class="card-icon">🔍</div>
+        <h3>grep</h3>
+        <p>Регулярки по содержимому файлов. Фильтр по типу. Сортировка по времени.</p>
+      </div>
+      <div class="card card-accent">
+        <div class="card-icon">📂</div>
+        <h3>glob</h3>
+        <p>Поиск по именам файлов с любыми паттернами и вложенностью.</p>
+      </div>
+      <div class="card card-accent">
+        <div class="card-icon">⚡</div>
+        <h3>turboread</h3>
+        <p>Параллельные саб-агенты исследуют код по нескольким темам одновременно.</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span>capy.ai</span>
+    <span>// ИССЛЕДОВАНИЕ</span>
+  </div>
+</section>
+
+<!-- SLIDE 5: BASH И ВЫПОЛНЕНИЕ -->
+<section class="slide">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="grid-bg"></div>
+  <div class="slide-header">
+    <div class="brand"><span class="brand-dot"></span>Captain Capy</div>
+    <div class="slide-num">05 / 11</div>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow">Выполнение</div>
+    <h2>Bash, тесты, билды.<br>Foreground и background.</h2>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-icon">▶</div>
+        <h3>Foreground</h3>
+        <p>Быстрые команды до 600 секунд. Установки, тесты, грэп, гит. Возвращаю результат сразу.</p>
+      </div>
+      <div class="card card-accent">
+        <div class="card-icon">⏳</div>
+        <h3>Background</h3>
+        <p>Dev-серверы, длинные билды, параллельные процессы. Возвращаю shell_id, инспектирую логи в реальном времени.</p>
+      </div>
+    </div>
+    <div class="stack-pills" style="margin-top: 32px;">
+      <span class="pill">Docker</span>
+      <span class="pill">gh CLI</span>
+      <span class="pill">git</span>
+      <span class="pill">npm / pnpm / yarn / bun</span>
+      <span class="pill">pip / poetry</span>
+      <span class="pill">ffmpeg</span>
+      <span class="pill">libreoffice</span>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span>capy.ai</span>
+    <span>// ВЫПОЛНЕНИЕ</span>
+  </div>
+</section>
+
+<!-- SLIDE 6: BUILD АГЕНТЫ -->
+<section class="slide">
+  <div class="orb orb-1"></div>
+  <div class="grid-bg"></div>
+  <div class="slide-header">
+    <div class="brand"><span class="brand-dot"></span>Captain Capy</div>
+    <div class="slide-num">06 / 11</div>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow">Параллелизм</div>
+    <h2>Делегирую Build-агентам.<br>Каждый на своей VM.</h2>
+    <div class="two-col">
+      <div>
+        <ul class="feature-list">
+          <li><strong>Параллельно:</strong> независимые задачи запускаю одновременно</li>
+          <li><strong>Стэк:</strong> зависимые задачи на ветке предыдущего PR</li>
+          <li><strong>Изоляция:</strong> своя VM = ничего не мешает</li>
+          <li><strong>Контроль:</strong> могу остановить, отредактировать, перезапустить</li>
+        </ul>
+      </div>
+      <div>
+        <div class="card card-accent">
+          <h3 style="font-size:20px; color:#f97316; margin-bottom:16px;">Выбор модели</h3>
+          <table class="model-table" style="font-size:14px;">
+            <tr><td style="color:rgba(255,255,255,0.85); font-family:Inter;">Сложная архитектура</td><td>claude-opus-4-7</td></tr>
+            <tr><td style="color:rgba(255,255,255,0.85); font-family:Inter;">Обычная разработка</td><td>sonnet-4-6</td></tr>
+            <tr><td style="color:rgba(255,255,255,0.85); font-family:Inter;">Простые правки</td><td>haiku-4-5</td></tr>
+            <tr><td style="color:rgba(255,255,255,0.85); font-family:Inter;">Большой контекст</td><td>gemini-3.1-pro</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span>capy.ai</span>
+    <span>// BUILD</span>
+  </div>
+</section>
+
+<!-- SLIDE 7: GIT / PR -->
+<section class="slide">
+  <div class="orb orb-1"></div>
+  <div class="grid-bg"></div>
+  <div class="slide-header">
+    <div class="brand"><span class="brand-dot"></span>Captain Capy</div>
+    <div class="slide-num">07 / 11</div>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow">GitHub workflow</div>
+    <h2>PR, ревью, CI —<br>цикл закрывается полностью.</h2>
+    <div class="grid-4">
+      <div class="card">
+        <div class="card-icon">🌿</div>
+        <h3 style="font-size:20px;">create_pr</h3>
+        <p>Создаю новую ветку и PR с авто-описанием</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⬆</div>
+        <h3 style="font-size:20px;">git_push</h3>
+        <p>Обновляю существующий PR коммитом</p>
+      </div>
+      <div class="card card-accent">
+        <div class="card-icon">🔬</div>
+        <h3 style="font-size:20px;">run_pr_review</h3>
+        <p>Автоматический ревью с findings</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">✓</div>
+        <h3 style="font-size:20px;">CI checks</h3>
+        <p>Отслеживаю GitHub Actions и статусы</p>
+      </div>
+    </div>
+    <div style="margin-top:32px;" class="lede">Стэкаю PR-ы, разбираю комментарии бота, отвечаю на review-findings и веду весь цикл до readiness.</div>
+  </div>
+  <div class="slide-footer">
+    <span>capy.ai</span>
+    <span>// GIT</span>
+  </div>
+</section>
+
+<!-- SLIDE 8: ИНТЕРНЕТ -->
+<section class="slide">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="grid-bg"></div>
+  <div class="slide-header">
+    <div class="brand"><span class="brand-dot"></span>Captain Capy</div>
+    <div class="slide-num">08 / 11</div>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow">Интернет</div>
+    <h2>Ищу и читаю веб.</h2>
+    <div class="grid-3">
+      <div class="card card-accent">
+        <div class="card-icon">🌐</div>
+        <h3>web_search</h3>
+        <p>Гугл-стайл поиск. Заголовки, ссылки, AI-саммари. Фильтр по дате.</p>
+        <div class="code">web_search(query)</div>
+      </div>
+      <div class="card card-accent">
+        <div class="card-icon">📄</div>
+        <h3>web_fetch</h3>
+        <p>Страница в чистый markdown + скриншот. Идеально для документации и блогов.</p>
+        <div class="code">web_fetch(url)</div>
+      </div>
+      <div class="card card-accent">
+        <div class="card-icon">🖼</div>
+        <h3>image_search</h3>
+        <p>Поиск реальных фотографий и изображений в сети с источниками.</p>
+        <div class="code">image_search(query)</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span>capy.ai</span>
+    <span>// WEB</span>
+  </div>
+</section>
+
+<!-- SLIDE 9: COMPUTER USE -->
+<section class="slide">
+  <div class="orb orb-1"></div>
+  <div class="grid-bg"></div>
+  <div class="slide-header">
+    <div class="brand"><span class="brand-dot"></span>Captain Capy</div>
+    <div class="slide-num">09 / 11</div>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow">Визуальный агент</div>
+    <h2>Управляю десктопом.<br>Глазами и руками.</h2>
+    <div class="two-col">
+      <div>
+        <div class="big-stat">computer</div>
+        <p class="lede" style="font-size:22px; margin-top:16px;">Спавню саб-агента, который видит скриншоты, кликает мышкой и печатает.</p>
+      </div>
+      <div>
+        <ul class="feature-list">
+          <li><strong>E2E-тестирование</strong> деплоев и UI</li>
+          <li><strong>Логины и flow</strong> через реальный Chrome</li>
+          <li><strong>Скриншоты и видео</strong> для подтверждения</li>
+          <li><strong>Сайты с JS</strong>, которые не отдают HTML</li>
+          <li><strong>Любые десктоп-приложения</strong> на XFCE</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span>capy.ai</span>
+    <span>// COMPUTER</span>
+  </div>
+</section>
+
+<!-- SLIDE 10: ГЕНЕРАЦИЯ -->
+<section class="slide">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="grid-bg"></div>
+  <div class="slide-header">
+    <div class="brand"><span class="brand-dot"></span>Captain Capy</div>
+    <div class="slide-num">10 / 11</div>
+  </div>
+  <div class="slide-body">
+    <div class="eyebrow">Генерация контента</div>
+    <h2>Картинки, документы,<br>презентации.</h2>
+    <div class="grid-4">
+      <div class="card card-accent">
+        <div class="card-icon">🎨</div>
+        <h3 style="font-size:20px;">image_generate</h3>
+        <p>Nano Banana 2: фото-реализм, текст на картинках, прозрачный фон</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">✂</div>
+        <h3 style="font-size:20px;">image_edit</h3>
+        <p>Редактирование с референсами и стилем</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <h3 style="font-size:20px;">Presentations</h3>
+        <p>HTML/CSS → PDF, reveal.js, Marp, PPTX через Python</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎬</div>
+        <h3 style="font-size:20px;">Media</h3>
+        <p>ffmpeg для видео и аудио, LibreOffice для Office</p>
+      </div>
+    </div>
+    <div class="lede" style="margin-top:32px; font-size:22px;">Эта презентация — пример: HTML + CSS отрендерены headless Chrome в PDF.</div>
+  </div>
+  <div class="slide-footer">
+    <span>capy.ai</span>
+    <span>// CONTENT</span>
+  </div>
+</section>
+
+<!-- SLIDE 11: FINAL -->
+<section class="slide final-slide">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="grid-bg"></div>
+  <div class="slide-body">
+    <div class="eyebrow">Готов к работе</div>
+    <h1>Что <span class="ac">собираем?</span></h1>
+    <div class="lede">От баг-фикса до архитектурного рефакторинга. Скажи задачу — я возьму её end-to-end.</div>
+    <div class="cta">▸ Просто напиши</div>
+  </div>
+  <div class="slide-footer">
+    <span style="color:rgba(255,255,255,0.5);">capy.ai · 2026</span>
+    <span>// FIN</span>
+  </div>
+</section>
+
+</body>
+</html>
